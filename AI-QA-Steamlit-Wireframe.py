@@ -1074,21 +1074,13 @@ with st.container(border=True):
      disabled=dg_busy,
     )
 
- 
-    database_storage_name = st.text_input(
-     "DATABASE STORAGE NAME",
-     key="dg_database",
-     placeholder="Enter database/storage name",
-     disabled=dg_busy,
-    )
     
     # ── Validation and submission ──
     dg_all_filled = all([
         selected_catalog,
         selected_schemas,
         selected_tables,
-        table_description.strip(),
-        database_storage_name.strip()
+        table_description.strip()
     ])
     
     # Button
@@ -1115,8 +1107,7 @@ with st.container(border=True):
                 "CATALOG": selected_catalog,
                 "SCHEMA": schema_csv,
                 "TABLE_NAME": table_csv,
-                "TABLE_DESCRIPTION": table_description.strip(),
-                "DATABASE_STORAGE_NAME": database_storage_name.strip(),
+                "TABLE_DESCRIPTION": table_description.strip()
             },
             "btn_key": "dg_creation",
         }
