@@ -1097,7 +1097,7 @@ with st.container(border=True):
     
 
     raw_table_description = st.text_area(
-        "TABLE DESCRIPTION",
+        "BUSINESS DESCRIPTION",
         key="dg_table_desc",
         height=200,
         placeholder="Type your business description...",
