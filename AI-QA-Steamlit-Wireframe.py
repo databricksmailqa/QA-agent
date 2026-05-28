@@ -1066,13 +1066,45 @@ with st.container(border=True):
     
     # ── 4. Additional Parameters ──
     st.markdown("##### 4️⃣ Additional Parameters")
-    table_description = st.text_area(
-     "TABLE DESCRIPTION",
-     key="dg_table_desc",
-     height=200,                 
-     placeholder="Enter detailed table description here...",
-     disabled=dg_busy,
+    
+    import re
+    import unicodedata
+    
+    def safe_streamlit_text(text: str) -> str:
+        """
+        Clean pasted text to prevent Streamlit crash (Copilot/Gemini safe).
+        """
+        if not text:
+            return ""
+    
+        # Normalize unicode
+        text = unicodedata.normalize("NFKC", text)
+    
+        # Remove control characters (MAIN FIX)
+        text = re.sub(r'[\u0000-\u001F\u007F-\u009F]', '', text)
+    
+        # Replace problematic characters
+        replacements = {
+            "“": '"', "”": '"',
+            "‘": "'", "’": "'",
+            "–": "-", "—": "-",
+            "•": "-", 
+        }
+        for k, v in replacements.items():
+            text = text.replace(k, v)
+    
+        return text
+    
+
+    raw_table_description = st.text_area(
+        "TABLE DESCRIPTION",
+        key="dg_table_desc",
+        height=200,
+        placeholder="Type your business description...",
+        disabled=dg_busy,
     )
+    
+    table_description = safe_streamlit_text(raw_table_description)
 
     
     # ── Validation and submission ──
